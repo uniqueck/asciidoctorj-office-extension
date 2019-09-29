@@ -1,2 +1,3 @@
-# asciidoctorj-excel
+= asciidoctorj-excel-extension
+
 A AsciidoctorJ extension to convert excel sheets as table.
