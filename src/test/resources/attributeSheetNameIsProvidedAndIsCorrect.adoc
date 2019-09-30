@@ -1,3 +1,0 @@
-= test
-
-excel::./test.xlsx[sheetName=Tabelle1]
