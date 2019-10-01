@@ -57,6 +57,23 @@
             <artifactId>poi-ooxml</artifactId>
             <version>4.1.0</version>
         </dependency>
+        <!-- JDK 11 - JAXBException NoClassDefFoundError - start -->
+        <dependency>
+            <groupId>com.sun.xml.bind</groupId>
+            <artifactId>jaxb-core</artifactId>
+            <version>2.3.0.1</version>
+        </dependency>
+        <dependency>
+            <groupId>javax.xml.bind</groupId>
+            <artifactId>jaxb-api</artifactId>
+            <version>2.3.1</version>
+        </dependency>
+        <dependency>
+            <groupId>com.sun.xml.bind</groupId>
+            <artifactId>jaxb-impl</artifactId>
+            <version>2.3.1</version>
+        </dependency>
+        <!-- JDK 11 - JAXBException NoClassDefFoundError - end -->
     </dependencies>
 
     <properties>
