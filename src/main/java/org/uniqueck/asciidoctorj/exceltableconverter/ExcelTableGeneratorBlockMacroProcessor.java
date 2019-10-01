@@ -1,6 +1,9 @@
 package org.uniqueck.asciidoctorj.exceltableconverter;
 
+import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.ss.usermodel.*;
+import org.apache.poi.xssf.usermodel.XSSFEvaluationWorkbook;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.asciidoctor.ast.Column;
 import org.asciidoctor.ast.StructuralNode;
 import org.asciidoctor.ast.Table;
@@ -9,6 +12,7 @@ import org.asciidoctor.extension.Name;
 import org.uniqueck.asciidoctorj.exceltableconverter.exceptions.AsciidoctorOfficeRuntimeException;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -25,9 +29,10 @@ public class ExcelTableGeneratorBlockMacroProcessor extends BlockMacroProcessor 
 
         File excelFile = new File((String) docAttributes.get("docdir"), target);
         if (excelFile.exists()) {
-            Workbook workbook = null;
+            XSSFWorkbook workbook = null;
             try {
-                workbook = WorkbookFactory.create(excelFile);
+                FileInputStream fis = new FileInputStream(excelFile);
+                workbook = new XSSFWorkbook(fis);
                 String sheetName = (String) attributes.get("sheetName");
                 if (sheetName == null || sheetName.trim().isEmpty()) {
                     throw new AsciidoctorOfficeRuntimeException("Attribute 'sheetName' is missing");
@@ -55,17 +60,11 @@ public class ExcelTableGeneratorBlockMacroProcessor extends BlockMacroProcessor 
                         throw new AsciidoctorOfficeRuntimeException("Sheet with name '" +sheetName + "' couldn't found");
                     }
                 }
+
+                workbook.close();
+                fis.close();
             } catch (IOException e) {
                 throw new AsciidoctorOfficeRuntimeException("Error on opening ExcelFile '" + target + "'",e);
-            } finally {
-                if (workbook != null ) {
-                    try {
-                        workbook.close();
-                    } catch (IOException e) {
-                        throw new AsciidoctorOfficeRuntimeException("Error on closing ExcelFile '" + target + "'",e);
-                    }
-                    workbook = null;
-                }
             }
 
         } else {
