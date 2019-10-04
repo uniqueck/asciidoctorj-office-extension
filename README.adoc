@@ -1,3 +1,7 @@
-= asciidoctorj-excel-extension
+:version: 1.0-SNAPSHOT
+= AsciidoctorJ Office Extension
 
-A AsciidoctorJ extension to convert excel sheets as table.
+image:https://circleci.com/gh/uniqueck/asciidoctorj-office-extension/tree/master.svg["CircleCI", link="https://circleci.com/gh/uniqueck/asciidoctorj-office-extension/tree/master"]
+image:https://img.shields.io/badge/License-MIT-yellow.svg["MIT License", link="https://opensource.org/licenses/MIT"]
+
+This AsciidoctorJ extension helps you to use office documents in your asciidoc toolchain.
