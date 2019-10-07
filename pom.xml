@@ -4,9 +4,21 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>org.uniqueck</groupId>
+    <groupId>com.uniqueck</groupId>
     <artifactId>asciidoctorj-office-extension</artifactId>
     <version>1.0-SNAPSHOT</version>
+
+    <developers>
+        <developer>
+            <id>uniqueck</id>
+            <email>bikerconstantin@gmail.com</email>
+            <name>Constantin Krueger</name>
+            <roles>
+                <role>Project Lead</role>
+            </roles>
+            <timezone>UTC+1</timezone>
+        </developer>
+    </developers>
 
 
     <distributionManagement>
@@ -16,6 +28,18 @@
             <url>https://api.bintray.com/maven/uniqueck/asciidoctorj/${project.artifactId}/;publish=1</url>
         </repository>
     </distributionManagement>
+
+    <scm>
+        <connection>scm:git:git@github.com:uniqueck/asciidoctorj-office-extension.git</connection>
+        <developerConnection>scm:git:git@github.com:uniqueck/asciidoctorj-office-extension.git</developerConnection>
+        <url>https://github.com/uniqueck/asciidoctorj-office-extension</url>
+        <tag>HEAD</tag>
+    </scm>
+
+    <issueManagement>
+        <url>https://github.com/uniqueck/asciidoctorj-office-extension/issues</url>
+        <system>GitHub Issues</system>
+    </issueManagement>
 
     <dependencies>
 
@@ -88,8 +112,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
-        <asciidoctor.maven.plugin.version>2.0.0-RC.1</asciidoctor.maven.plugin.version>
-        <asciidoctorj.version>2.0.0</asciidoctorj.version>
+        <asciidoctorj.version>2.1.0</asciidoctorj.version>
         <jruby.version>9.2.7.0</jruby.version>
     </properties>
 
