@@ -5,8 +5,11 @@ import org.apache.poi.xslf.usermodel.XSLFSlide;
 import org.asciidoctor.ast.StructuralNode;
 import org.asciidoctor.extension.BlockMacroProcessor;
 import org.asciidoctor.extension.Name;
+import org.asciidoctor.jruby.internal.AsciidoctorCoreException;
+import org.jruby.RubySymbol;
 import org.uniqueck.asciidoctorj.exceptions.AsciidoctorOfficeRuntimeException;
 
+import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -26,46 +29,53 @@ public class SlidesImageGeneratorBlockMacroProcessor extends BlockMacroProcessor
         Map<String, Object> docAttributes = structuralNode.getDocument().getAttributes();
 
         File slideFile = new File((String) docAttributes.get("docdir"), target);
-        if (slideFile.exists()) {
-            XMLSlideShow xmlSlideShow = null;
-            try {
-                xmlSlideShow = new XMLSlideShow(new FileInputStream(slideFile));
-                List<XSLFSlide> allSlides = xmlSlideShow.getSlides();
-                if (!allSlides.isEmpty()) {
-                    XSLFSlide slide = allSlides.get(0);
-                    BufferedImage bufferedImage = new BufferedImage(xmlSlideShow.getPageSize().width, xmlSlideShow.getPageSize().height, BufferedImage.TYPE_INT_ARGB);
-                    Graphics2D graphics = bufferedImage.createGraphics();
-                    graphics.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-                    graphics.setRenderingHint(RenderingHints.KEY_ALPHA_INTERPOLATION, RenderingHints.VALUE_ALPHA_INTERPOLATION_QUALITY);
-                    graphics.setRenderingHint(RenderingHints.KEY_COLOR_RENDERING, RenderingHints.VALUE_COLOR_RENDER_QUALITY);
-                    graphics.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
-                    slide.draw(graphics);
-                    // TODO get Iamgedir and save Image in Image Directory ImageIO.write(bufferedImage, "PNG", new File("test.png"));
-                } else {
-                    // FIXME
-                }
-            } catch (IOException e) {
-                throw new AsciidoctorOfficeRuntimeException("Error on reading '" + target + "'",e);
-            } finally {
-                if (xmlSlideShow != null) {
-                    try {
-                        xmlSlideShow.close();
-                    } catch (IOException e) {
-                        throw new AsciidoctorOfficeRuntimeException("Error on closing slideshow '" + target + "'", e);
-                    }
-                }
-            }
-        } else {
-            throw new AsciidoctorOfficeRuntimeException("ImpressFile '" + target + "' doesn't exist");
-        }
+
+        int slideNumber = getSlideNumber(attributes);
+        final String slidesDirectoryName = getAttribute(structuralNode, "slides-dir-name", "slides");
+        final File slidesDirectory = getSlidesDirectory(structuralNode, slidesDirectoryName);
+
+        File extractSlideImageFile = new SlideImageExtractor(slidesDirectory, slideFile).extractSlideToImage(slideNumber);
+        contentLines.add(".Slide" +  slideNumber);
+        contentLines.add("image::" + slidesDirectoryName + "/" + extractSlideImageFile.getName() + "[]");
 
 
         parseContent(structuralNode, contentLines);
         return null;
     }
 
-    protected int getSlideIndex(Map<String, Object> attributes) {
-        return (Integer)attributes.getOrDefault("slideIndex", (Integer)0);
+    private File getSlidesDirectory(StructuralNode structuralNode, String slidesDirectoryName) {
+        final String imagesDirName = getAttribute(structuralNode, "imagesdir", "");
+        File slidesDirectory;
+        if (new File(imagesDirName).isAbsolute()) {
+            slidesDirectory = new File(imagesDirName + '/' + slidesDirectoryName);
+        } else {
+            final File buildDir = getBuildDir(structuralNode);
+            slidesDirectory = new File(buildDir, imagesDirName + '/' + slidesDirectoryName);
+        }
+        return slidesDirectory;
+    }
+
+    private File getBuildDir(StructuralNode structuralNode) {
+        Map<Object, Object> globalOptions = structuralNode.getDocument().getOptions();
+
+        String toDir = (String) globalOptions.get("to_dir");
+        String destDir = (String) globalOptions.get("destination_dir");
+        String buildDir = toDir != null ? toDir : destDir;
+        return new File(buildDir);
+    }
+
+    protected int getSlideNumber(Map<String, Object> attributes) {
+        return Integer.parseInt((String)attributes.getOrDefault("slideNumber", "1"));
+    }
+
+    private String getAttribute(StructuralNode structuralNode, String attributeName, String defaultValue) {
+        String value = (String) structuralNode.getAttribute(attributeName);
+
+        if (value == null || value.trim().isEmpty()) {
+            value = defaultValue;
+        }
+
+        return value;
     }
 
 }
