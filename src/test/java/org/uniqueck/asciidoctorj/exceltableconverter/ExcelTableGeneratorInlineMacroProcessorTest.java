@@ -23,14 +23,14 @@ class ExcelTableGeneratorInlineMacroProcessorTest extends AbstractAsciidoctorTes
 
     @DisplayName("Attribute sheetName is missing")
     @Test
-    void testExcelFileExistButSheetNameAttributeIsMissing(@TempDir File tempDir) {
+    void testExcelFileExistButSheetNameAttributeIsMissing() {
         RuntimeException thrown = Assertions.assertThrows(RuntimeException.class, () -> convert("excel::./simpleExcelTable.xlsx[]"));
         assertEquals("Attribute 'sheetName' is missing", thrown.getCause().getMessage());
     }
 
     @DisplayName("Sheet with Name doesn't exist")
     @Test
-    void testExcelFileExistAndSheetNameIsProvided(@TempDir File tempDir) {
+    void testExcelFileExistAndSheetNameIsProvided() {
         RuntimeException thrown = Assertions.assertThrows(RuntimeException.class, () -> convert("excel::./simpleExcelTable.xlsx[sheetName=hugo]"));
         assertEquals("Sheet with name 'hugo' couldn't found", thrown.getCause().getMessage());
     }
