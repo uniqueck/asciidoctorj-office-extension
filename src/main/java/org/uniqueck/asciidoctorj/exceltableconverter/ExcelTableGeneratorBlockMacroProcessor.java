@@ -1,15 +1,11 @@
 package org.uniqueck.asciidoctorj.exceltableconverter;
 
-import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.ss.usermodel.*;
-import org.apache.poi.xssf.usermodel.XSSFEvaluationWorkbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
-import org.asciidoctor.ast.Column;
 import org.asciidoctor.ast.StructuralNode;
-import org.asciidoctor.ast.Table;
 import org.asciidoctor.extension.BlockMacroProcessor;
 import org.asciidoctor.extension.Name;
-import org.uniqueck.asciidoctorj.exceltableconverter.exceptions.AsciidoctorOfficeRuntimeException;
+import org.uniqueck.asciidoctorj.exceptions.AsciidoctorOfficeRuntimeException;
 
 import java.io.File;
 import java.io.FileInputStream;

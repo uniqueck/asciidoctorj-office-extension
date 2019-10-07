@@ -1,4 +1,4 @@
-package org.uniqueck.asciidoctorj.exceltableconverter.exceptions;
+package org.uniqueck.asciidoctorj.exceptions;
 
 public class AsciidoctorOfficeRuntimeException extends RuntimeException {
 

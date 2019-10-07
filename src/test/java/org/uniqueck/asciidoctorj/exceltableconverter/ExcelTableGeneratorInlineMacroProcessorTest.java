@@ -5,7 +5,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
 import org.uniqueck.asciidoctorj.AbstractAsciidoctorTestHelper;
-import org.uniqueck.asciidoctorj.exceltableconverter.exceptions.AsciidoctorOfficeRuntimeException;
+import org.uniqueck.asciidoctorj.exceptions.AsciidoctorOfficeRuntimeException;
 
 import java.io.File;
 

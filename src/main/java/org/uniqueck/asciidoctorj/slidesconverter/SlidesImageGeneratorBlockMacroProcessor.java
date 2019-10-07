@@ -1,18 +1,12 @@
 package org.uniqueck.asciidoctorj.slidesconverter;
 
-import org.apache.poi.sl.usermodel.Shape;
-import org.apache.poi.sl.usermodel.SlideShow;
-import org.apache.poi.sl.usermodel.SlideShowFactory;
-import org.apache.poi.sl.usermodel.TextParagraph;
 import org.apache.poi.xslf.usermodel.XMLSlideShow;
 import org.apache.poi.xslf.usermodel.XSLFSlide;
 import org.asciidoctor.ast.StructuralNode;
 import org.asciidoctor.extension.BlockMacroProcessor;
 import org.asciidoctor.extension.Name;
-import org.uniqueck.asciidoctorj.exceltableconverter.exceptions.AsciidoctorOfficeRuntimeException;
+import org.uniqueck.asciidoctorj.exceptions.AsciidoctorOfficeRuntimeException;
 
-import javax.imageio.ImageIO;
-import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
