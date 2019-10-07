@@ -9,6 +9,14 @@
     <version>1.0-SNAPSHOT</version>
 
 
+    <distributionManagement>
+        <repository>
+            <id>bintray-uniqueck-asciidoctorj-office-extension</id>
+            <name>uniqueck-asciidoctorj-office-extension</name>
+            <url>https://api.bintray.com/maven/uniqueck/asciidoctorj/${project.artifactId}/;publish=1</url>
+        </repository>
+    </distributionManagement>
+
     <dependencies>
 
         <dependency>

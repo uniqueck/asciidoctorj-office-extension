@@ -30,6 +30,22 @@ jobs:
       #    root: target
       #    paths:
       #      - generated-docs
+  release:
+    docker:
+      - image: circleci/openjdk:11-jdk
+    steps:
+      - checkout
+      - run:
+          name: Install Graphiz
+          command: sudo apt-get install graphviz
+      - run: |
+          if [[ "$CIRCLE_TAG" != "" ]]; then
+            VERSION="$(echo "$CIRCLE_TAG" | grep -Po '\d+\.\d+\.\d+')"
+            mvn versions:set -DnewVersion=${VERSION} versions:commit
+          fi
+      - run:
+          name: Build and Test
+          command: mvn -s .circleci/settings.xml -B deploy -DskipTests
   docs-deploy:
     docker:
       - image: node:8.10.0
@@ -66,9 +82,11 @@ workflows:
           filters:
             tags:
               only: /.*/
-      #- docs-deploy:
-      #    requires:
-      #      - build
-      #    filters:
-      #      branches:
-      #        only: master
+      - release:
+            requires:
+              - build
+            filters:
+              tags:
+                only: /^v.*/
+              branches:
+                ignore: /.*/
