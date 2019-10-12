@@ -45,7 +45,7 @@ To use this extension declare it as a dependency in asciidoctor-maven-plugin con
 <1> asciidoctorj-office-extension is added
 <2> check for the latest version at https://bintray.com/bintray/jcenter[JCenter]
 
-== Powerpoint Extension
+== Microsoft Powerpoint Extension
 
 === slide macro
 
@@ -56,13 +56,27 @@ slide::/path/to/powerpointFile.pptx[slideNumber=1]
 
 This macro generate an image from the first slide from the given powerpointFile.pptx and embedded it in your asciidoc document.
 
-== Excel Extension
+Currently only Microsofts *.pptx format is supported.
+
+
+==== Attributes
+
+* **slides-dir-name** output directory name for converted images from slides
+
+
+
+== Microsoft Excel Extension
 
 === excel macro
 
 [source]
 ----
-excel::/path/to/excel.xlsx[sheetName=Table1]
+excel::/path/to/excel.(xlsx|xls)[sheetName=Table1]
 ----
 
 This macro generate a asciidoc table based on your excel sheet.
+Currently supported formats are xls and xlsx.
+
+==== Attributes
+
+* **sheetName** name of sheet to be converted to AsciiDoc table

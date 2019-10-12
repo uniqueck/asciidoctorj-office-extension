@@ -1,0 +1,14 @@
+= TODO
+
+== Slide Macro
+
+ * [ ] add support for https://developers.google.com/slides/reference/rest[Google Slides]
+ * [ ] check support for old Microsoft Format ppt
+ * [ ] check support for open document format with https://fivedots.coe.psu.ac.th/~ad/jlop/#draw[]
+
+== Excel Macro
+
+ * [x] cell alignment
+ * [x] cell width
+ * [ ] handle colspan
+ * [ ] handle rowspan

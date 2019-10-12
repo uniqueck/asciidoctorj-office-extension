@@ -3,15 +3,16 @@ package org.uniqueck.asciidoctorj.exceltableconverter;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.io.TempDir;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 import org.uniqueck.asciidoctorj.AbstractAsciidoctorTestHelper;
+import org.uniqueck.asciidoctorj.exceptions.AsciidoctorOfficeFormatNotSupportedRuntimeException;
 import org.uniqueck.asciidoctorj.exceptions.AsciidoctorOfficeRuntimeException;
 
-import java.io.File;
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
-class ExcelTableGeneratorInlineMacroProcessorTest extends AbstractAsciidoctorTestHelper {
+class ExcelTableGeneratorBlockMacroProcessorTest extends AbstractAsciidoctorTestHelper {
 
     @DisplayName("Excel file is missing, so exception should thrown")
     @Test
@@ -36,13 +37,21 @@ class ExcelTableGeneratorInlineMacroProcessorTest extends AbstractAsciidoctorTes
     }
 
     @DisplayName("Sheet with Name exist")
-    @Test
-    void testExcelFileExistAndSheetNameIsProvidedAndSheetExist(@TempDir File tempDir) {
-        String actual = convert("excel::simpleExcelTable.xlsx[sheetName=Tabelle1]");
+    @ParameterizedTest
+    @ValueSource(strings = {"simpleExcelTable.xls", "simpleExcelTable.xlsx"})
+    void testExcelFileExistAndSheetNameIsProvidedAndSheetExist(String excelFileName) {
+        String actual = convert("excel::" + excelFileName + "[sheetName=Tabelle1]");
         String expected = convertFile("src/test/resources/expectedTableStructure.adoc");
         assertEquals(expected, actual);
     }
 
+
+    @ParameterizedTest
+    @ValueSource(strings = {"simpleExcelTable.ods"})
+    void testNotSupportedFormats(String excelFileName) {
+        AsciidoctorOfficeFormatNotSupportedRuntimeException runtimeException = assertThrows(AsciidoctorOfficeFormatNotSupportedRuntimeException.class, () -> convert("excel::" + excelFileName + "[sheetName=Tabelle1]"));
+        assertEquals("Format for file 'simpleExcelTable.ods' currently not supported", runtimeException.getMessage());
+    }
 
 
 }
