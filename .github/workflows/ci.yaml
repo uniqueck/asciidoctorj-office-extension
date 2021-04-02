@@ -1,0 +1,18 @@
+name: CI
+
+on: push
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        jdk: [8,9,11,15]
+    steps:
+      - uses: actions/checkout@v2
+      - name: install jdk
+        uses: actions/setup-java@v1
+        with:
+          java-version: ${{ matrix.jdk }}
+      - name: run tests
+        run: mvn --batch-mode test
