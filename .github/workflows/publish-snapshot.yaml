@@ -1,0 +1,28 @@
+name: Publish snapshot version
+
+on:
+  push:
+    branches:
+      - "master"
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - id: install-secret-key
+        name: Install pgp secret key
+        run: |
+          cat <(echo -e "${{ secrets.OSSRH_GPG_SECRET_KEY }}") | gpg --batch --import
+          gpg --list-secret-keys --keyid-format LONG
+      - name: install jdk
+        uses: actions/setup-java@v1
+        with:
+          java-version: 8
+      - name: deploy
+        run: |
+          mvn \
+            --batch-mode \
+            --no-transfer-progress \
+            -Dgpg.passphrase=${{ secrets.OSSRH_GPG_SECRET_KEY_PASSWORD }} \
+            verify -P deploy-to-sonatype

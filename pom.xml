@@ -4,9 +4,11 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.uniqueck</groupId>
+    <groupId>de.uniqueck.asciidoctorj.extension.office</groupId>
     <artifactId>asciidoctorj-office-extension</artifactId>
     <version>1.0-SNAPSHOT</version>
+
+    <name>AsciidoctorJ Office Extension</name>
 
     <developers>
         <developer>
@@ -22,10 +24,13 @@
 
 
     <distributionManagement>
+        <snapshotRepository>
+            <id>ossrh</id>
+            <url>https://s01.oss.sonatype.org/content/repositories/snapshots</url>
+        </snapshotRepository>
         <repository>
-            <id>bintray</id>
-            <name>uniqueck-asciidoctorj-office-extension</name>
-            <url>https://api.bintray.com/maven/uniqueck/asciidoctorj/${project.artifactId}/;publish=1</url>
+            <id>ossrh</id>
+            <url>https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/</url>
         </repository>
     </distributionManagement>
 
@@ -148,8 +153,10 @@
                 <version>3.1.1</version>
                 <executions>
                     <execution>
-                        <phase>package</phase>
-                        <goals><goal>jar</goal></goals>
+                        <id>attach-javadocs</id>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
                         <configuration>
                             <source>${maven.compiler.source}</source>
                         </configuration>
@@ -163,14 +170,45 @@
                 <version>3.1.0</version>
                 <executions>
                     <execution>
-                        <phase>package</phase>
-                        <goals><goal>jar</goal></goals>
+                        <id>attach-sources</id>
+                        <goals>
+                            <goal>jar-no-fork</goal>
+                        </goals>
                     </execution>
                 </executions>
             </plugin>
-
         </plugins>
     </build>
+
+    <profiles>
+        <profile>
+            <id>deploy-to-sonatype</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-gpg-plugin</artifactId>
+                        <version>1.6</version>
+                        <executions>
+                            <execution>
+                                <id>sign-artifacts</id>
+                                <phase>verify</phase>
+                                <goals>
+                                    <goal>sign</goal>
+                                </goals>
+                                <configuration>
+                                    <gpgArguments>
+                                        <arg>--pinentry-mode</arg>
+                                        <arg>loopback</arg>
+                                    </gpgArguments>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
 
 
 </project>
