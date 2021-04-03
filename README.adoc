@@ -1,16 +1,15 @@
 :icons: font
-:version: 1.0-SNAPSHOT
+:version: 0.1.0
 = AsciidoctorJ Office Extension
 
-image:https://circleci.com/gh/uniqueck/asciidoctorj-office-extension/tree/master.svg?style=shield["CircleCI", link="https://circleci.com/gh/uniqueck/asciidoctorj-office-extension/tree/master"]
+image:https://github.com/uniqueck/asciidoctorj-office-extension/actions/workflows/ci.yaml/badge.svg?branch=master["GitHub Actions", link="https://github.com/uniqueck/asciidoctorj-office-extension/actions/workflows/ci.yaml?branch=master"]
 image:https://img.shields.io/badge/License-MIT-yellow.svg["MIT License", link="https://opensource.org/licenses/MIT"]
-image:https://api.bintray.com/packages/uniqueck/asciidoctorj/asciidoctorj-office-extension/images/download.svg[link="https://bintray.com/uniqueck/asciidoctorj/asciidoctorj-office-extension/_latestVersion"]
+image:https://maven-badges.herokuapp.com/maven-central/de.uniqueck.asciidoctorj.extensions/asciidoctorj-office-extension/badge.svg?style=plastic[link="https://maven-badges.herokuapp.com/maven-central/de.uniqueck.asciidoctorj.extensions/asciidoctorj-office-extension"]
 
 This AsciidoctorJ extension helps you to use office documents in your asciidoc toolchain.
 
 == Installation
 
-The extension is available in https://bintray.com/bintray/jcenter[JCenter].
 To use this extension declare it as a dependency in asciidoctor-maven-plugin configuration.
 
 [subs="attributes, verbatim"]
@@ -34,7 +33,7 @@ To use this extension declare it as a dependency in asciidoctor-maven-plugin con
 	</executions>
 	<dependencies>
 		<dependency> <!--1-->
-			<groupId>com.uniqueck</groupId>
+			<groupId>de.uniqueck.asciidoctorj.extensions</groupId>
 			<artifactId>asciidoctorj-office-extension</artifactId>
 			<version>{version}</version> <!--2-->
 		</dependency>
@@ -43,7 +42,7 @@ To use this extension declare it as a dependency in asciidoctor-maven-plugin con
 ----
 
 <1> asciidoctorj-office-extension is added
-<2> check for the latest version at https://bintray.com/bintray/jcenter[JCenter]
+<2> check for the latest version at https://search.maven.org/search?q=g:de.uniqueck.asciidoctorj.extensions%20AND%20a:asciidoctorj-office-extension[Maven Central]
 
 == Microsoft Powerpoint Extension
 
