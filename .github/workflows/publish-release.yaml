@@ -1,9 +1,9 @@
-name: Publish snapshot version
+name: Publish release version
 
 on:
   push:
-    branches:
-      - "master"
+    tags:
+      - 'v*'
 
 jobs:
   build:
@@ -19,6 +19,16 @@ jobs:
         uses: actions/setup-java@v1
         with:
           java-version: 8
+
+      - name: set version from tag
+        run: |
+          mvn \
+            --batch-mode \
+            --no-transfer-progress \
+            versions:set \
+            -DnewVersion=${GITHUB_REF##*/v} \
+            versions:commit
+
       - name: deploy
         run: |
           mvn \
