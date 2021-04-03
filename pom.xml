@@ -9,6 +9,14 @@
     <version>1.0-SNAPSHOT</version>
 
     <name>AsciidoctorJ Office Extension</name>
+    <description>An asciidoctorj extension to integrate office documents (slides and sheets).</description>
+    <url>https://github.com/uniqueck/asciidoctorj-office-extension</url>
+    <licenses>
+        <license>
+            <name>MIT</name>
+            <url>https://github.com/uniqueck/asciidoctorj-office-extension/blob/master/LICENSE</url>
+        </license>
+    </licenses>
 
     <developers>
         <developer>
