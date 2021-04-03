@@ -19,6 +19,9 @@ jobs:
         uses: actions/setup-java@v1
         with:
           java-version: 8
+          server-id: ossrh
+          server-username: MAVEN_USERNAME
+          server-password: MAVEN_PASSWORD
 
       - name: set version from tag
         run: |
@@ -30,6 +33,9 @@ jobs:
             versions:commit
 
       - name: deploy
+        env:
+          MAVEN_USERNAME: ${{ secrets.OSSRH_USERNAME }}
+          MAVEN_PASSWORD: ${{ secrets.OSSRH_TOKEN }}
         run: |
           mvn \
             --batch-mode \
