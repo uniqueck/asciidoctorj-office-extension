@@ -1,15 +1,17 @@
 package org.uniqueck.asciidoctorj.exceltableconverter;
 
+import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.xssf.usermodel.*;
 
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.util.Map;
 
 class XLSXTableConverter extends AbstractExcelConverter<XSSFWorkbook, XSSFSheet, XSSFRow, XSSFCell, XSSFFormulaEvaluator> {
 
-    XLSXTableConverter(File inputFile, String sheetName) {
-        super(inputFile, sheetName);
+    XLSXTableConverter(final File inputFile, final Map<String, Object> attributes) {
+        super(inputFile, attributes);
     }
 
     @Override
@@ -33,7 +35,18 @@ class XLSXTableConverter extends AbstractExcelConverter<XSSFWorkbook, XSSFSheet,
     }
 
     @Override
-    protected XSSFFormulaEvaluator getFormularEvualator(XSSFWorkbook wb) {
+    protected XSSFFormulaEvaluator getFormulaEvaluator(XSSFWorkbook wb) {
         return wb.getCreationHelper().createFormulaEvaluator();
     }
+
+    @Override
+    protected String getFillForegroundColorAsHex(final XSSFCell cell) {
+        // Get background color
+        final XSSFColor cellFillColor = cell.getCellStyle().getFillForegroundColorColor();
+        if (cellFillColor != null) {
+            return encodeHex(cellFillColor.getRGB());
+        }
+        return null;
+    }
+
 }

@@ -40,11 +40,10 @@ class ExcelTableGeneratorBlockMacroProcessorTest extends AbstractAsciidoctorTest
     @ParameterizedTest
     @ValueSource(strings = {"simpleExcelTable.xls", "simpleExcelTable.xlsx"})
     void testExcelFileExistAndSheetNameIsProvidedAndSheetExist(String excelFileName) {
-        String actual = convert("excel::" + excelFileName + "[sheetName=Tabelle1]");
+        String actual = convert("excel::" + excelFileName + "[sheetName=Tabelle1,options=\"header\"]");
         String expected = convertFile("src/test/resources/expectedTableStructure.adoc");
         assertEquals(expected, actual);
     }
-
 
     @ParameterizedTest
     @ValueSource(strings = {"simpleExcelTable.ods"})

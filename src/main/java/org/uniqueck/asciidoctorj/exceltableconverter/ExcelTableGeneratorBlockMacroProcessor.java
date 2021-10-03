@@ -6,27 +6,26 @@ import org.uniqueck.asciidoctorj.AbstractOfficeBlockMacroProcessor;
 import org.uniqueck.asciidoctorj.exceptions.AsciidoctorOfficeFormatNotSupportedRuntimeException;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
 @Name("excel")
 public class ExcelTableGeneratorBlockMacroProcessor extends AbstractOfficeBlockMacroProcessor {
 
-
     @Override
-    protected List<String> generateAsciiDocMarkup(StructuralNode parent, File sourceFile, Map<String, Object> attributes) {
-        if (sourceFile.getName().toUpperCase().endsWith(".XLSX")) {
-            return new XLSXTableConverter(sourceFile, getSheetName(attributes)).convert();
-        } else if (sourceFile.getName().toUpperCase().endsWith(".XLS")) {
-            return new XLSTableConverter(sourceFile, getSheetName(attributes)).convert();
+    protected List<String> generateAsciiDocMarkup(final StructuralNode parent, final File sourceFile, final Map<String, Object> attributes) {
+        if (sourceFile == null) {
+            return new ArrayList<>();
+        }
+
+        if (sourceFile.getName().toLowerCase().endsWith(".xlsx")) {
+            return new XLSXTableConverter(sourceFile, attributes).convert();
+        } else if (sourceFile.getName().toLowerCase().endsWith(".xls")) {
+            return new XLSTableConverter(sourceFile, attributes).convert();
         } else {
             throw new AsciidoctorOfficeFormatNotSupportedRuntimeException(sourceFile);
         }
     }
-
-    protected String getSheetName(Map<String, Object> attributes) {
-        return (String) attributes.get("sheetName");
-    }
-
 
 }

@@ -4,11 +4,12 @@ import org.asciidoctor.ast.StructuralNode;
 import org.asciidoctor.extension.BlockMacroProcessor;
 
 import java.io.File;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
 import java.util.Map;
 
 public abstract class AbstractOfficeBlockMacroProcessor extends BlockMacroProcessor {
-
 
     protected abstract List<String> generateAsciiDocMarkup(StructuralNode parent, File sourceFile, Map<String, Object> attributes);
 
@@ -18,8 +19,11 @@ public abstract class AbstractOfficeBlockMacroProcessor extends BlockMacroProces
         return null;
     }
 
-    protected File getBuildDir(StructuralNode structuralNode) {
-        Map<Object, Object> globalOptions = structuralNode.getDocument().getOptions();
+    protected File getBuildDir(final StructuralNode structuralNode) {
+        if (structuralNode == null) {
+            return null;
+        }
+        final Map<Object, Object> globalOptions = structuralNode.getDocument().getOptions();
 
         String toDir = (String) globalOptions.get("to_dir");
         String destDir = (String) globalOptions.get("destination_dir");
@@ -37,9 +41,18 @@ public abstract class AbstractOfficeBlockMacroProcessor extends BlockMacroProces
         return value;
     }
 
+    public static File getTargetAsFile(final StructuralNode structuralNode, final String target) {
+        if (structuralNode == null || target == null || target.isEmpty()) {
+            return null;
+        }
+        final Map<Object, Object> globalOptions = structuralNode.getDocument().getOptions();
 
-    protected File getTargetAsFile(StructuralNode structuralNode, String target) {
-        String docdir = getAttribute(structuralNode, "docdir", "");
-        return new File(docdir, target);
+        final String docDir = (String) globalOptions.get("base_dir");
+        final Path baseDirPath = Paths.get(docDir).normalize();
+
+        final Path absoluteFilePath = baseDirPath.resolve(target).normalize();
+
+        return absoluteFilePath.toFile();
     }
+
 }
