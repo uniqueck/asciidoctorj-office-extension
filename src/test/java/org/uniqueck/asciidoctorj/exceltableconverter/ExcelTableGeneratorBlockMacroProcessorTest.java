@@ -36,15 +36,23 @@ class ExcelTableGeneratorBlockMacroProcessorTest extends AbstractAsciidoctorTest
         assertEquals("Sheet with name 'hugo' couldn't found", thrown.getCause().getMessage());
     }
 
-    @DisplayName("Sheet with Name exist")
+    @DisplayName("Sheet with Name exist. With header.")
     @ParameterizedTest
     @ValueSource(strings = {"simpleExcelTable.xls", "simpleExcelTable.xlsx"})
-    void testExcelFileExistAndSheetNameIsProvidedAndSheetExist(String excelFileName) {
-        String actual = convert("excel::" + excelFileName + "[sheetName=Tabelle1]");
-        String expected = convertFile("src/test/resources/expectedTableStructure.adoc");
+    void testExcelFileExistAndSheetNameIsProvidedAndSheetExistWithHeader(String excelFileName) {
+        String actual = convert("excel::" + excelFileName + "[sheetName=Tabelle1,options=\"header\"]");
+        String expected = convertFile("src/test/resources/simpleExcelTableHeader.adoc");
         assertEquals(expected, actual);
     }
 
+    @DisplayName("Sheet with Name exist. Without header.")
+    @ParameterizedTest
+    @ValueSource(strings = {"simpleExcelTable.xls", "simpleExcelTable.xlsx"})
+    void testExcelFileExistAndSheetNameIsProvidedAndSheetExistWithoutHeader(String excelFileName) {
+        String actual = convert("excel::" + excelFileName + "[sheetName=Tabelle1]");
+        String expected = convertFile("src/test/resources/simpleExcelTable.adoc");
+        assertEquals(expected, actual);
+    }
 
     @ParameterizedTest
     @ValueSource(strings = {"simpleExcelTable.ods"})
@@ -53,5 +61,31 @@ class ExcelTableGeneratorBlockMacroProcessorTest extends AbstractAsciidoctorTest
         assertEquals("Format for file 'simpleExcelTable.ods' currently not supported", runtimeException.getMessage());
     }
 
+    @DisplayName("Sheet with Name exist. Row and col span plus background color.")
+    @ParameterizedTest
+    @ValueSource(strings = {"rowColSpanBackgroundExcelTable.xls"})
+    void testExcelFileExistAndSheetNameIsProvidedAndSheetExistRowColSpanBackgroundXLS(String excelFileName) {
+        String actual = convert("excel::" + excelFileName + "[sheetName=Tabelle1]");
+        String expected = convertFile("src/test/resources/rowColSpanBackgroundExcelTableXLS.adoc");
+        assertEquals(expected, actual);
+    }
+
+    @DisplayName("Sheet with Name exist. Row and col span plus background color.")
+    @ParameterizedTest
+    @ValueSource(strings = {"rowColSpanBackgroundExcelTable.xlsx"})
+    void testExcelFileExistAndSheetNameIsProvidedAndSheetExistRowColSpanBackgroundXLSX(String excelFileName) {
+        String actual = convert("excel::" + excelFileName + "[sheetName=Tabelle1]");
+        String expected = convertFile("src/test/resources/rowColSpanBackgroundExcelTableXLSX.adoc");
+        assertEquals(expected, actual);
+    }
+
+    @DisplayName("Sheet with Name exist. Hyperlinks.")
+    @ParameterizedTest
+    @ValueSource(strings = {"hyperlinkExcelTable.xls", "hyperlinkExcelTable.xlsx"})
+    void testExcelFileExistAndSheetNameIsProvidedAndSheetExistHyperlink(String excelFileName) {
+        String actual = convert("excel::" + excelFileName + "[sheetName=Tabelle1]");
+        String expected = convertFile("src/test/resources/hyperlinkExcelTable.adoc");
+        assertEquals(expected, actual);
+    }
 
 }

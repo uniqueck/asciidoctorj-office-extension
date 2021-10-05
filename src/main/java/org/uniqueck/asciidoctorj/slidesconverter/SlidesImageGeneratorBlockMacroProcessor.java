@@ -1,24 +1,14 @@
 package org.uniqueck.asciidoctorj.slidesconverter;
 
-import org.apache.poi.xslf.usermodel.XMLSlideShow;
-import org.apache.poi.xslf.usermodel.XSLFSlide;
 import org.asciidoctor.ast.StructuralNode;
-import org.asciidoctor.extension.BlockMacroProcessor;
 import org.asciidoctor.extension.Name;
-import org.asciidoctor.jruby.internal.AsciidoctorCoreException;
-import org.jruby.RubySymbol;
 import org.uniqueck.asciidoctorj.AbstractOfficeBlockMacroProcessor;
-import org.uniqueck.asciidoctorj.exceptions.AsciidoctorOfficeRuntimeException;
 
-import javax.imageio.ImageIO;
-import java.awt.*;
-import java.awt.image.BufferedImage;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+
 @Name("slide")
 public class SlidesImageGeneratorBlockMacroProcessor extends AbstractOfficeBlockMacroProcessor {
 

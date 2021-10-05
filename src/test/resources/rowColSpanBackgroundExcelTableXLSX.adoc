@@ -1,0 +1,17 @@
+[cols="1,1"]
+|===
+.>|Spalte 1
+.>|Spalte 2
+
+2+^|1
+{set:cellbgcolor:#c00000}
+
+.>|3
+{set:cellbgcolor:#00b0f0}
+.2+^.^|4
+{set:cellbgcolor:#00b050}
+
+.>|6
+{set:cellbgcolor\!}
+
+|===

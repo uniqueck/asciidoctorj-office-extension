@@ -17,7 +17,6 @@ import java.util.List;
 @Getter(AccessLevel.PACKAGE)
 public class SlideImageExtractor {
 
-
     private final File slideImageDirectory;
     private final File impressSourceFile;
 

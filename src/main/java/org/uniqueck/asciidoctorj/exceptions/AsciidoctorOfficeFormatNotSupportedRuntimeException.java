@@ -7,4 +7,5 @@ public class AsciidoctorOfficeFormatNotSupportedRuntimeException extends Asciido
     public AsciidoctorOfficeFormatNotSupportedRuntimeException(File file) {
         super(String.format("Format for file '%s' currently not supported", file.getName()));
     }
+
 }
