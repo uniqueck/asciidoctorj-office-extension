@@ -41,6 +41,19 @@ jobs:
             --no-transfer-progress \
             clean deploy -P deploy-to-sonatype
 
+      - name: Create github release
+        uses: docker://antonyurchenko/git-release:latest
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          DRAFT_RELEASE: "false"
+          PRE_RELEASE: "false"
+          CHANGELOG_FILE: "CHANGELOG.md"
+          ALLOW_EMPTY_CHANGELOG: "false"
+          RELEASE_NAME_PREFIX: "Release: "
+        with:
+          args: |
+            ./target/asciidoctor-office-extension-*.jar
+
   announcement:
     name: "Send announcements"
     runs-on: ubuntu-latest
